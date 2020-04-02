@@ -9,14 +9,13 @@ class MyApp(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
-        # self.dashboard2.setText("Game Start")
+        self.dashboard2.setText("Game Start")
 
         self.n = random.randint(1, 100)
-        self.dashboard2.setText(str(self.n))
 
     def initUI(self):
 
-        self.dashboard = QLineEdit('0', self)
+        self.dashboard = QLineEdit(" ", self)
         self.dashboard.move(10, 20)
         self.dashboard.resize(300, 40)
         self.dashboard.setAlignment(QtCore.Qt.AlignRight)
@@ -49,15 +48,13 @@ class MyApp(QWidget):
                     lambda state, btn = self.num[j+(i*3)] :self.writeNumber(state, btn))
 
         self.ok = QPushButton('확인', self)
-        # self.ok.setText('확인')
         self.ok.move(210, 270)
         self.ok.resize(100, 50)
         self.ok.setStyleSheet('background:orange')
         self.ok.clicked.connect( \
             lambda state, btn=self.ok: self.result(state, btn))
 
-        self.cancel = QPushButton(self)
-        self.cancel.setText('취소')
+        self.cancel = QPushButton('취소',self)
         self.cancel.move(10, 270)
         self.cancel.resize(100, 50)
         self.cancel.setStyleSheet('background:red')
@@ -71,33 +68,33 @@ class MyApp(QWidget):
 
     def writeNumber(self, state, btn):
         num = self.dashboard.text()
-        if int(num) == 0:
+        if num == " ":
             num = btn.text()
         else:
             num += btn.text()
-            if len(num) == 3:
-                num = btn.text()
         self.dashboard.setText(num)
+        self.dashboard2.setText(" ")
 
     def onChanged(self, text):
         self.lbl.setText(text)
         self.lbl.adjustSize()
 
     def reset(self,state, btn):
-        self.dashboard.clear()
-        self.dashboard.setText('0')
+        num = self.dashboard.text()
+        if num != " ":
+            num = int(num) // 10
+
+        self.dashboard.setText(str(num))
 
     def result(self,state,btn):
         num = self.dashboard.text()
         if int(num) < self.n:
-            self.dashboard2.clear()
             self.dashboard2.setText('High')
         elif int(num) == self.n:
-            self.dashboard2.clear()
             self.dashboard2.setText("That's Right!")
         else:
-            self.dashboard2.clear()
             self.dashboard2.setText('Low..')
+        self.dashboard.setText("")
 
 if __name__ == '__main__':
    app = QApplication(sys.argv)
