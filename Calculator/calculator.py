@@ -49,8 +49,11 @@ class MyApp(QWidget):
             self.btnOp[r].setStyleSheet('background:white')
             self.btnOp[r].clicked.connect( \
                 lambda state, btn=self.btnOp[r]: self.MakeResult(state, btn))
-            self.btnOp[r-1].clicked.connect( \
-                lambda state, btn=self.btnOp[r-1]: self.writeNumber(state, btn))
+
+
+        for i in range(4, 8):
+            self.btnOp[i].clicked.connect( \
+                lambda state, btn=self.btnOp[i]: self.writeNumber(state, btn))
 
         self.btnOp[0].setStyleSheet('background:red')
         self.btnOp[0].clicked.connect( \
@@ -93,10 +96,19 @@ class MyApp(QWidget):
     def MakeResult(self, state, btn):
         result = eval(self.dashboard.text())
         self.dashboard2.setText(str(result))
+        self.dashboard.setText(str(result))
+        if btn == self.btnOp[8]:
+            result = 0
+            self.dashboard2.setText(str(result))
+
 
     def dot(self, state, btn):
         num = self.dashboard.text()
-        self.dashboard.setText(str(num))
+        if num == "":
+            self.dashboard.setText('0.')
+        else:
+            self.dashboard.setText(str(num)+'.')
+
 
     def per(self, state, btn):
         num = self.dashboard.text()
