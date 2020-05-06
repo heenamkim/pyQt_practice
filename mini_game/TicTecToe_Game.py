@@ -23,16 +23,16 @@ class MyApp(QWidget):
 
 
         self.game_number = []
-        self.game_number2 = []
+        self.game_number2 = ['1','2','3','4','5','6','7','8','9']
 
         for a in range(3):
             for b in range(1, 4):
-                self.game_number.append(QPushButton(self))
-                self.game_number[(a*3)+(b-1)].move(30 + (110 * a), 50 + (90 * b))
-                self.game_number[(a*3)+(b-1)].resize (100, 80)
+                self.game_number.append(QPushButton(self.game_number2[(a*3)+(b-1)], self))
+                self.game_number[(a*3)+(b-1)].move((115 * b) - 85, 130 + (95 * a))
+                self.game_number[(a*3)+(b-1)].resize(100, 80)
                 # self.game_number[(a*3)+(b-1)].clicked.connect(self.gameStart)
-                # self.game_number[(a*3)+(b-1)].clicked.connect( \
-                #     lambda state, btn=self.game_number[(a*3)+(b-1)]: self.gameStart(state, btn))
+                self.game_number[(a*3)+(b-1)].clicked.connect( \
+                    lambda state, btn=self.game_number[(a*3)+(b-1)]: self.gameStart(state, btn))
 
         self.menu_number = []
         name = ['다시 시작', '다시 누르기', '확인']
@@ -49,11 +49,15 @@ class MyApp(QWidget):
         self.setStyleSheet('background: white')
         self.show()
 
-    # def gameStart(self):
-    #     self.game_number[(a*3)+(b-1)].setText('O')
-        # self.you = btn
-        # self.game_number2.append(you+1)
-        #  self.count += 1
+    def gameStart(self, state, btn):
+        if self.count % 2 == 0:
+            btn.setText('O')
+            # self.you = btn
+            # self.game_number2.append(you+1)
+            self.count += 1
+        elif self.count % 2 == 1:
+            btn.setText('X')
+            self.count += 1
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

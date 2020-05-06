@@ -16,7 +16,7 @@ class MyApp(QWidget):
 
         import random
 
-        self.i = 0
+        self.k = 1
 
         self.Menu = QLabel('  누가 누가 더 가깝게 누르나', self)
         self.Menu.setGeometry(QtCore.QRect(50, 50, 50, 50))
@@ -60,7 +60,7 @@ class MyApp(QWidget):
         self.timer = QBasicTimer()
         self.step = 0
 
-        self.result = QLabel(self)
+        self.result = QLabel('0',self)
         self.result.setGeometry(QtCore.QRect(50, 50, 50, 50))
         self.result.setFont(QtGui.QFont("궁서", 30))
         self.result.move(30, 110)
@@ -74,14 +74,14 @@ class MyApp(QWidget):
         self.show()
 
     def timerEvent(self, e):
-        if self. i % 2 == 1:
+        if self. k % 2 == 1:
             if self.step >= 100:
                 self.timer.stop()
                 self.btn.setText('Finished')
                 self.name_number[0].setText(str(self.step))
                 self.step = 0
 
-        elif self. i % 2 == 0:
+        elif self. k % 2 == 0:
             if self.step >= 100:
                 self.timer.stop()
                 self.btn.setText('Finished')
@@ -92,7 +92,7 @@ class MyApp(QWidget):
         self.pbar.setValue(self.step)
 
     def doAction(self):
-        if self.i % 2 == 1:
+        if self.k % 2 == 0:
             if self.timer.isActive():
                 self.timer.stop()
                 self.btn.setText('Start')
@@ -101,8 +101,11 @@ class MyApp(QWidget):
             else:
                 self.timer.start(100, self)
                 self.btn.setText('Stop')
-                self.i += 1
-        elif self.i % 2 == 0:
+                self.k += 1
+                self.endResult()
+                # self.btn.clicked.connect(self.endResult)
+
+        else:
             if self.timer.isActive():
                 self.timer.stop()
                 self.btn.setText('Start')
@@ -111,25 +114,26 @@ class MyApp(QWidget):
             else:
                 self.timer.start(100, self)
                 self.btn.setText('Stop')
-                self.i += 1
+                self.k += 1
 
     def endResult(self):
-        num1 = self.name_number[0].Text()
-        num2 = self.name_number[1].Text()
+        num1 = self.name_number[0].text()
+        num2 = self.name_number[1].text()
+
         if random_number < int(num1):
-            player1 = int(num1) - random_number
+            num1 = int(num1) - random_number
         else:
-            player1 = random_number - int(num1)
+            num1 = random_number - int(num1)
 
         if random_number < int(name2):
-            player2 = int(name2) - random_number
+            num2 = int(name2) - random_number
         else:
-            player2 = random_number - int(name2)
+            num2 = random_number - int(name2)
 
-        if self.player1 > self.player2:
-            self.result.setText('player2')
+        if num1 < num2:
+            self.result.setText(str(num1))
         else:
-            self.result.setText('player1')
+            self.result.setText(str(num2))
 
 
 if __name__ == '__main__':
