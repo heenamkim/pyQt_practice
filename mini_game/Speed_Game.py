@@ -92,30 +92,17 @@ class MyApp(QWidget):
         self.pbar.setValue(self.step)
 
     def doAction(self):
-        if self.k % 2 == 0:
-            if self.timer.isActive():
-                self.timer.stop()
-                self.btn.setText('Start')
-                self.name_number[0].setText(str(self.step))
-                self.step = 0
-            else:
-                self.timer.start(100, self)
-                self.btn.setText('Stop')
-                self.k += 1
-                self.endResult()
-                # self.btn.clicked.connect(self.endResult)
-
+        if self.timer.isActive():
+            self.timer.stop()
+            self.btn.setText('Start')
+            self.name_number[0].setText(str(self.step))
+            self.step = 0
         else:
-            if self.timer.isActive():
-                self.timer.stop()
-                self.btn.setText('Start')
-                self.name_number[1].setText(str(self.step))
-                self.step = 0
-            else:
-                self.timer.start(100, self)
-                self.btn.setText('Stop')
-                self.k += 1
-
+            self.timer.start(100, self)
+            self.btn.setText('Stop')
+            self.k += 1
+            self.endResult()
+            # self.btn.clicked.connect(self.endResult)
     def endResult(self):
         num1 = self.name_number[0].text()
         num2 = self.name_number[1].text()
