@@ -84,7 +84,7 @@ class MyApp(QWidget):
                 self.numKey[c + r * 3].clicked.connect( \
                     lambda state, btn=self.numKey[c + r * 3]: self.writeNumber(state, btn))
 
-        self.setWindowTitle('Jiniz Calculator')
+        self.setWindowTitle('Calculator')
         self.setGeometry(300, 300, 375, 430)
         self.show()
 
