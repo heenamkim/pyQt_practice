@@ -17,6 +17,8 @@ class MyApp(QWidget):
         import random
 
         self.k = 1
+        self.num1 = 0
+        self.num2 = 0
 
         self.Menu = QLabel('  누가 누가 더 가깝게 누르나', self)
         self.Menu.setGeometry(QtCore.QRect(50, 50, 50, 50))
@@ -60,12 +62,12 @@ class MyApp(QWidget):
         self.timer = QBasicTimer()
         self.step = 0
 
-        self.result = QLabel('0',self)
+        self.result = QLabel('00000', self)
         self.result.setGeometry(QtCore.QRect(50, 50, 50, 50))
-        self.result.setFont(QtGui.QFont("궁서", 30))
-        self.result.move(30, 110)
-        self.result.resize(100, 30)
-        # self.result.setStyleSheet('background: red')
+        self.result.setFont(QtGui.QFont("궁서", 20))
+        self.result.move(50, 410)
+        self.result.resize(300, 40)
+        self.result.setStyleSheet('background: red')
 
         self.setWindowTitle('누가누가 더 가깝게 누르나 게임')
         self.move(300, 300)
@@ -74,19 +76,14 @@ class MyApp(QWidget):
         self.show()
 
     def timerEvent(self, e):
-        if self. k % 2 == 1:
-            if self.step >= 100:
-                self.timer.stop()
-                self.btn.setText('Finished')
+        if self.step >= 100:
+            self.timer.stop()
+            self.btn.setText('Finished')
+            if self.k % 2 == 0:
                 self.name_number[0].setText(str(self.step))
-                self.step = 0
-
-        elif self. k % 2 == 0:
-            if self.step >= 100:
-                self.timer.stop()
-                self.btn.setText('Finished')
+            else:
                 self.name_number[1].setText(str(self.step))
-                self.step = 0
+            self.step = 0
 
         self.step = self.step + 1
         self.pbar.setValue(self.step)
@@ -95,32 +92,38 @@ class MyApp(QWidget):
         if self.timer.isActive():
             self.timer.stop()
             self.btn.setText('Start')
-            self.name_number[0].setText(str(self.step))
+            if self.k % 2 == 0:
+                self.name_number[0].setText(str(self.step))
+            else:
+                self.name_number[1].setText(str(self.step))
+                self.btn.clicked.connect(self.endResult)
+
             self.step = 0
         else:
             self.timer.start(100, self)
             self.btn.setText('Stop')
             self.k += 1
-            self.endResult()
-            # self.btn.clicked.connect(self.endResult)
-    def endResult(self):
-        num1 = self.name_number[0].text()
-        num2 = self.name_number[1].text()
 
-        if random_number < int(num1):
-            num1 = int(num1) - random_number
-        else:
-            num1 = random_number - int(num1)
 
-        if random_number < int(name2):
-            num2 = int(name2) - random_number
-        else:
-            num2 = random_number - int(name2)
+    def endResult(self, state, btn):
+        self.num1 = self.name_number[0].text()
+        self.num2 = self.name_number[1].text()
 
-        if num1 < num2:
-            self.result.setText(str(num1))
+        if random_number < int(self.num1):
+            self.num1 = int(self.num1) - random_number
         else:
-            self.result.setText(str(num2))
+            self.num1 = random_number - int(self.num1)
+
+        if random_number < int(self.name2):
+            self.num2 = int(self.name2) - random_number
+        else:
+            self.num2 = random_number - int(self.name2)
+
+        if self.num1 < self.num2:
+            self.result.setText('Player1')
+        else:
+            self.result.setText('Player2')
+
 
 
 if __name__ == '__main__':

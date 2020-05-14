@@ -45,7 +45,6 @@ class MyApp(QWidget):
 
             self.menu_number[0].clicked.connect( \
                 lambda state, btn=self.menu_number[0]: self.reset(state, btn))
-            # self.menu_number[1].addAction(self.undo)
 
 
 
@@ -58,12 +57,12 @@ class MyApp(QWidget):
     def gameStart(self, state, btn):
         if self.count % 2 == 1:
             btn.setText('O')
-            # self.game_number2[(a*3)+(b-1)].append(x)
+            self.game_number2[(a*3)+(b-1)].append('O')
             self.count += 1
 
         elif self.count % 2 == 0:
             btn.setText('X')
-            # self.game_number2[(a*3)+(b-1)].append(x)
+            self.game_number2[(a*3)+(b-1)].append('X')
             self.count += 1
 
     def gameCheck (self):
@@ -96,7 +95,7 @@ class MyApp(QWidget):
         #     self.menu_number[2].setText('X win')
         #
     def reset(self, state, btn):
-        self.game_number.clear()
+        self.btn.setText(' ')
 
 
 if __name__ == '__main__':
